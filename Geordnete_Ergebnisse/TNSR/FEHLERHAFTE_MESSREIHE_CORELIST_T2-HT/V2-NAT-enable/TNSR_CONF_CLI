@@ -1,0 +1,123 @@
+tnsr01 tnsr(config)# sh con can cli
+configuration history enable
+
+nacm disable
+nacm read-default permit
+nacm write-default deny
+nacm exec-default permit
+nacm disable
+
+dataplane cpu main-core 2
+dataplane cpu skip-cores 2
+dataplane cpu corelist-workers 3
+dataplane cpu corelist-workers 4
+dataplane cpu corelist-workers 5
+dataplane cpu corelist-workers 6
+dataplane cpu corelist-workers 7
+dataplane cpu corelist-workers 8
+dataplane cpu corelist-workers 9
+dataplane cpu corelist-workers 10
+dataplane cpu corelist-workers 11
+dataplane cpu corelist-workers 12
+dataplane cpu corelist-workers 13
+dataplane cpu corelist-workers 14
+dataplane cpu corelist-workers 15
+dataplane ethernet default-mtu 1500
+dataplane dpdk dev 0000:81:00.0 network name LAN-perf0
+dataplane dpdk dev 0000:81:00.1 network name LAN-0
+dataplane dpdk dev 0000:c1:00.0 network name LAN-perf1
+dataplane dpdk dev 0000:c1:00.1 network name LAN-1
+dataplane dpdk uio-driver igb_uio
+dataplane buffers buffers-per-numa 32768
+dataplane statseg heap-size 96M
+
+
+nat global-options nat44 max-translations-per-thread 128000
+nat global-options nat44 endpoint-dependent true
+nat global-options nat44 forwarding true
+nat global-options nat44 enabled true
+
+route table ipv4-VRF:0
+    id 0
+exit
+
+
+interface LAN-0
+    disable
+    ip address 172.22.26.1/24
+exit
+interface LAN-1
+    disable
+    ip address 172.22.27.1/24
+exit
+interface LAN-perf0
+    enable
+    ip nat outside
+    ip address 172.22.24.1/24
+exit
+interface LAN-perf1
+    enable
+    ip nat inside
+    ip address 172.22.25.1/24
+exit
+
+nat pool interface LAN-perf0
+nat ipfix logging domain 1
+nat ipfix logging src-port 4739
+nat nat64 map parameters
+    security-check enable
+exit
+
+interface LAN-0
+exit
+interface LAN-1
+exit
+interface LAN-perf0
+exit
+interface LAN-perf1
+exit
+
+route table ipv4-VRF:0
+    id 0
+    route 16.0.0.0/16
+        next-hop 0 via 172.22.26.10 LAN-0
+    exit
+    route 48.0.0.0/16
+        next-hop 0 via 172.22.27.10 LAN-1
+    exit
+exit
+
+
+route dynamic manager
+exit
+
+route dynamic bgp
+    disable
+exit
+
+route dynamic ospf6
+exit
+
+route dynamic ospf
+exit
+
+route dynamic rip
+exit
+
+dhcp4 server
+    lease persist true
+    lease lfc-interval 3600
+    interface socket raw
+exit
+
+unbound server
+    do-ip4
+    do-tcp
+    do-udp
+    harden glue
+    hide identity
+    port outgoing range 4096
+exit
+
+snmp host disable
+

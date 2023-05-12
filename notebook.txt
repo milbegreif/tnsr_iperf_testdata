@@ -1,0 +1,29 @@
+
+
+
+# Latency log
+ping -w60 -D 172.22.26.10 > latency.txt
+
+
+Versuch 2
+
+ubuntu@nuc5:~$ sudo ./set_irq_affinity.sh 27 mlx-swp31s0
+
+iperf3 -c 172.22.26.10 -t60 -Z -A 11,11
+
+Versuch 3
+
+# Core Affinity Setup
+sudo ethtool -U mlx-swp31s0 flow-type tcp4 dst-port 5002 action 12
+sudo ethtool -U mlx-swp31s0 flow-type tcp4 dst-port 5003 action 13
+sudo ethtool -U mlx-swp31s0 flow-type tcp4 dst-port 5004 action 14
+sudo ethtool -U mlx-swp31s0 flow-type tcp4 dst-port 5005 action 15
+
+sudo ./set_irq_affinity.sh 12-15 mlx-swp31s0
+
+# Iperf  Server
+iperf3 -s -p 5002  &  iperf3 -s -p 5003  &  iperf3 -s -p 5004  &  iperf3 -s -p 5005
+
+# Iperf Client
+iperf3 -c 172.22.26.10 -t60  -A 28,28 -p 5002 -Z -b 25G & iperf3 -c 172.22.26.10 -t60  -A 29,29 -p 5003   -Z -b 25G & iperf3 -c 172.22.26.10 -t60  -A 30,30 -p 5004   -Z -b 25G & iperf3 -c 172.22.26.10 -t60  -A 31,31 -p 5005   -Z -b 25G
+

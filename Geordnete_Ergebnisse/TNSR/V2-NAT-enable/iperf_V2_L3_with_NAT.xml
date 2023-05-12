@@ -1,0 +1,175 @@
+<config>
+   <conf-history-config xmlns="urn:netgate:xml:yang:netgate-conf-history">
+      <version-history-config>
+         <conf-history-enabled>true</conf-history-enabled>
+      </version-history-config>
+   </conf-history-config>
+   <dataplane-config xmlns="urn:netgate:xml:yang:netgate-dataplane">
+      <cpu>
+         <main-core>2</main-core>
+         <skip-cores>2</skip-cores>
+         <corelist-workers>
+            <corelist-worker>8</corelist-worker>
+            <corelist-worker>9</corelist-worker>
+            <corelist-worker>10</corelist-worker>
+            <corelist-worker>11</corelist-worker>
+            <corelist-worker>12</corelist-worker>
+            <corelist-worker>13</corelist-worker>
+            <corelist-worker>14</corelist-worker>
+            <corelist-worker>15</corelist-worker>
+         </corelist-workers>
+      </cpu>
+      <ethernet>
+         <default-mtu>1500</default-mtu>
+      </ethernet>
+      <dpdk>
+         <dev>
+            <id>0000:81:00.0</id>
+            <device-type>network</device-type>
+            <name>LAN-perf0</name>
+         </dev>
+         <dev>
+            <id>0000:c1:00.0</id>
+            <device-type>network</device-type>
+            <name>LAN-perf1</name>
+         </dev>
+         <uio-driver>igb_uio</uio-driver>
+      </dpdk>
+      <buffers>
+         <buffers-per-numa>32768</buffers-per-numa>
+      </buffers>
+      <statseg>
+         <heap-size>96M</heap-size>
+         <per-node-counters>
+            <enabled>false</enabled>
+         </per-node-counters>
+      </statseg>
+   </dataplane-config>
+   <interfaces-config xmlns="urn:netgate:xml:yang:netgate-interface">
+      <interface>
+         <name>LAN-perf0</name>
+         <enabled>true</enabled>
+         <nat-interface>outside</nat-interface>
+         <ipv4>
+            <address>
+               <ip>172.22.24.1/24</ip>
+            </address>
+         </ipv4>
+      </interface>
+      <interface>
+         <name>LAN-perf1</name>
+         <enabled>true</enabled>
+         <nat-interface>inside</nat-interface>
+         <ipv4>
+            <address>
+               <ip>172.22.25.1/24</ip>
+            </address>
+         </ipv4>
+      </interface>
+   </interfaces-config>
+   <kea-config xmlns="urn:netgate:xml:yang:netgate-kea">
+      <dhcp4-server>
+         <Dhcp4>
+            <lease-database>
+               <type>memfile</type>
+               <persist>true</persist>
+               <lfc-interval>3600</lfc-interval>
+            </lease-database>
+            <interfaces-config>
+               <dhcp-socket-type>raw</dhcp-socket-type>
+            </interfaces-config>
+         </Dhcp4>
+      </dhcp4-server>
+   </kea-config>
+   <nat-config xmlns="urn:netgate:xml:yang:netgate-nat">
+      <global-options>
+         <nat44>
+            <max-translations-per-thread>128000</max-translations-per-thread>
+            <endpoint-dependent>true</endpoint-dependent>
+            <forwarding-enabled>true</forwarding-enabled>
+            <enabled>true</enabled>
+         </nat44>
+      </global-options>
+      <dynamic>
+         <pool-if-table>
+            <if-entry>
+               <if-name>LAN-perf0</if-name>
+            </if-entry>
+         </pool-if-table>
+      </dynamic>
+      <ipfix>
+         <logging>
+            <domain>1</domain>
+            <src-port>4739</src-port>
+         </logging>
+      </ipfix>
+      <nat64>
+         <map xmlns="urn:netgate:xml:yang:netgate-map">
+            <parameters>
+               <security-check>
+                  <enable>true</enable>
+               </security-check>
+            </parameters>
+         </map>
+      </nat64>
+   </nat-config>
+   <route-table-config xmlns="urn:netgate:xml:yang:netgate-route-table">
+      <static-routes>
+         <route-table>
+            <name>ipv4-VRF:0</name>
+            <id>0</id>
+         </route-table>
+      </static-routes>
+   </route-table-config>
+   <route-config xmlns="urn:netgate:xml:yang:netgate-route">
+      <dynamic>
+         <bgp xmlns="urn:netgate:xml:yang:netgate-bgp">
+            <global-options>
+               <enable>false</enable>
+            </global-options>
+         </bgp>
+         <manager xmlns="urn:netgate:xml:yang:netgate-frr">
+            <global-options>
+               <ptm>false</ptm>
+            </global-options>
+         </manager>
+         <ospf xmlns="urn:netgate:xml:yang:netgate-ospf">
+            <global-options>
+               <enable>false</enable>
+            </global-options>
+         </ospf>
+         <ospf6 xmlns="urn:netgate:xml:yang:netgate-ospf6">
+            <global-options>
+               <enable>false</enable>
+            </global-options>
+         </ospf6>
+         <rip xmlns="urn:netgate:xml:yang:netgate-rip">
+            <global-options>
+               <enable>false</enable>
+            </global-options>
+         </rip>
+      </dynamic>
+   </route-config>
+   <snmp-config xmlns="https://netgate.com/ns/netgate-snmp">
+      <snmp-enable>false</snmp-enable>
+   </snmp-config>
+   <unbound-config xmlns="urn:netgate:xml:yang:netgate-unbound">
+      <daemon>
+         <server>
+            <do-ip4>true</do-ip4>
+            <do-tcp>true</do-tcp>
+            <do-udp>true</do-udp>
+            <harden-glue>true</harden-glue>
+            <hide-identity>true</hide-identity>
+            <outgoing-range>4096</outgoing-range>
+         </server>
+      </daemon>
+   </unbound-config>
+   <nacm xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-acm">
+      <enable-nacm>false</enable-nacm>
+      <read-default>permit</read-default>
+      <write-default>deny</write-default>
+      <exec-default>permit</exec-default>
+      <enable-external-groups>true</enable-external-groups>
+   </nacm>
+</config>

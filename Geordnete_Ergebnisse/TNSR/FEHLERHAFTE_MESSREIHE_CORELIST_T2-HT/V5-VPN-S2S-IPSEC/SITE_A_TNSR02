@@ -1,0 +1,60 @@
+tnsr(config)# tunnel ipip 0
+tnsr(config-ipip)# source ipv4 address 100.64.0.2
+tnsr(config-ipip)# destination ipv4 address 100.64.0.1
+tnsr(config-ipip)# exit
+tnsr(config)# ipsec tunnel 0
+tnsr(config-ipsec-tunnel)# enable
+tnsr(config-ipsec-tunnel)# crypto config-type ike
+tnsr(config-ipsec-tunnel)# crypto ike
+tnsr(config-ipsec-crypto-ike)# version 2
+tnsr(config-ipsec-crypto-ike)# lifetime 28800
+tnsr(config-ipsec-crypto-ike)# proposal 1
+tnsr(config-ike-proposal)# encryption aes128
+tnsr(config-ike-proposal)# integrity sha1
+tnsr(config-ike-proposal)# group modp2048
+tnsr(config-ike-proposal)# exit
+tnsr(config-ipsec-crypto-ike)# identity local
+tnsr(config-ike-identity)# type address
+tnsr(config-ike-identity)# value 100.64.0.2
+tnsr(config-ike-identity)# exit
+tnsr(config-ipsec-crypto-ike)# identity remote
+tnsr(config-ike-identity)# type address
+tnsr(config-ike-identity)# value 100.64.0.1
+tnsr(config-ike-identity)# exit
+tnsr(config-ipsec-crypto-ike)# authentication local
+tnsr(config-ike-auth)# round 1
+tnsr(config-ike-auth-round)# psk mysupersecretkey
+tnsr(config-ike-auth-round)# exit
+tnsr(config-ike-auth)# exit
+tnsr(config-ipsec-crypto-ike)# authentication remote
+tnsr(config-ike-auth)# round 1
+tnsr(config-ike-auth-round)# psk mysupersecretkey
+tnsr(config-ike-auth-round)# exit
+tnsr(config-ike-auth)# exit
+tnsr(config-ipsec-crypto-ike)# child 1
+tnsr(config-ike-child)# lifetime 3600
+tnsr(config-ike-child)# proposal 1
+tnsr(config-ike-child-proposal)# encryption aes128
+tnsr(config-ike-child-proposal)# integrity sha1
+tnsr(config-ike-child-proposal)# group modp2048
+tnsr(config-ike-child-proposal)# exit
+tnsr(config-ike-child)# exit
+tnsr(config-ipsec-crypto-ike)# exit
+tnsr(config-ipsec-tunnel)# exit
+tnsr(config)# interface ipip0
+tnsr(config-interface)# ip address 10.0.0.2/30
+tnsr(config-interface)# mtu 1400
+tnsr(config-interface)# enable
+tnsr(config-interface)# exit
+
+
+
+
+
+
+tnsr(config)# route table ipv4-VRF:0
+tnsr(config-route-table)# route 10.25.0.0/16
+tnsr(config-rttbl4-next-hop)# next-hop 0 via 172.32.0.2
+tnsr(config-rttbl4-next-hop)# exit
+tnsr(config-route-table)# exit
+tnsr(config)# exit
