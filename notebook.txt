@@ -1,17 +1,13 @@
-
-
-
 # Latency log
 ping -w60 -D 172.22.26.10 > latency.txt
 
-
-Versuch 2
+Experiment 2
 
 ubuntu@nuc5:~$ sudo ./set_irq_affinity.sh 27 mlx-swp31s0
 
 iperf3 -c 172.22.26.10 -t60 -Z -A 11,11
 
-Versuch 3
+Experiment 3
 
 # Core Affinity Setup
 sudo ethtool -U mlx-swp31s0 flow-type tcp4 dst-port 5002 action 12

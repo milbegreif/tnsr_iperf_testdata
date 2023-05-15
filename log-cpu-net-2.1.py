@@ -5,7 +5,7 @@ import time
 import signal
 import sys
 
-# Variable um Client oder Server Log zu waehlen.
+# Prefix for server and client logs
 prefix = 'client-'
 #prefix = 'server-'
 

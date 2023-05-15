@@ -1,0 +1,69 @@
+Hardware
+
+5x Network Use Case Server, each with:
+
+* CPU: 2x 8C/16T
+* RAM: 128GB
+* Storage: 480GB
+* Network:
+  * 2x 10GbE (on-board)
+  * 2x 25GbE
+  * 4x 100GbE
+
+Specs/Parts
+
+sysGen/SUPERMICRO – A+ Server SYS- 2024US-TRT – bestehend aus: s/n:
+A0222.2506-05 bis -09 Virtualization / Cloud Computing / High End Enterprise
+Server / Flexible Networking Options
+* Mainboard Supermicro H12DSU-iN / 2U Rackmount Chassis CSE-829U2TS-R1K62P3-T
+  Dual AMD EPYC™ 7002 Series Processors 8TB Registered ECC DDR4 3200MHz SDRAM
+  in 32 DIMMs
+* Expansion Slots:
+  * 2 PCI-E 4.0 x16 (FH, 10.5" L) slots,
+  * 1 PCI-E 4.0 x16 (FH, 9.5" L) slot,
+  * 1 PCI-E 4.0 x16 (LP) slot,
+  * 1 PCI-E 4.0 x8 (FH, 9.5" L, in x16) slot,
+  * 1 PCI-E 4.0 x8 (internal LP in x16) slot
+  * Integrated IPMI 2.0 + KVM with dedicated LAN
+  * Dual 10GBase-T LAN ports via Intel® X710-AT2
+  * 12 hot-swap 3.5" Drive Bays:
+  * 12 SATA3 by default
+  * or 8 SATA3 + 4 NVMe via optional tray
+  * or 12 SAS3 via optional SAS kit
+  * 4 heavy-duty PWM fans with optimal fan speed control
+  * 1600W Redundant Power Supplies Titanium Level (96%+)
+* inkl. 19" Rackmountschienen
+* 2x AMD EPYC™ ROME 7F32 Processor, 8-Core 8C/16T, 3.7GHz, 128MB L3 Cache,
+  180W, DDR4-3200MHz, Socket SP3 (4094) OPN Tray: # 100-000000139 OPN PIB: #
+  100-000000139WOF
+* 2x CPU Kühler #SNK-P0063P
+* 128GB (16x 8GB) DDR4-3200MHz ECC reg. Markenspeicher Samsung oder
+  vergleichbar
+* OS SSDs (SW-RAID1)
+  * 2x 480GB Samsung SSD PM883 480GB, SATA (MZ7LH480HAHQ-00005) - SSD • 2.5" •
+    SATA 6Gb/s • Lesen: 550MB/s • Schreiben: 520MB/s • IOPS 4K lesen/schreiben:
+    98k/24k • TBW: 683TB • Protokoll: AHCI • Datenschutzfunktionen: 256bit AES,
+    Power-Loss Protection • Herstellergarantie: drei Jahre
+  * 2x MCP-220-00043-0N – Black Hot-swap Gen-4 2.5" to 3.5" HDD tray
+* VGA onboard
+* LAN onboard:
+  * Dual 10GBase-T LAN ports via Intel® X710-AT2
+  * 1 RJ45 Dedicated IPMI LAN port
+* Zusätzliche Netzwerkkarten (je 2x 100Gb QSFP28):
+  * 2x MCX516A-CDAT - ConnectX®-5 Ex EN network interface card, 100GbE
+    dual-port QSFP28, PCIe4.0 x16, tall bracket
+  * 2x EXW-ADPTR-ETH-3B - Mellanox 2 Year Extended Warranty for a total of 3
+    years Bronze for Ethernet Adapter Cards
+* zusätzliche Netzwerkkarte:
+  * 1x MCX512A-ACUT - ConnectX-5 EN network interface card, 10/25GbE dual-port
+    SFP28, PCIe3.0 x8, UEFI Enabled (x86/ARM), tall bracket
+  * 1x EXW-ADPTR-ETH-3B - Mellanox 2 Year Extended Warranty for a total of 3
+    years Bronze for Ethernet Adapter Cards
+* Integration des Gesamtsystems, Burn-In Test
+* ohne Betriebssystem, getestet unter Linux
+* inkl. Liste aller möglichen Hardware Mac-Adressen (inkl. IPMI)
+* es gilt die gesetzliche Gewährleistungsfrist
+* 3 Jahre Teilegarantie inkl. H/W-Komponenten Vorabaustausch, Reaktionszeit NBD
+  (nächster Arbeitstag bei Fehlermeldung Mo – Frei bis 12.00Uhr)
+* NOTE: Software Out of Band License key (SFT-OOB-LIC) included for OOB BIOS
+  management
